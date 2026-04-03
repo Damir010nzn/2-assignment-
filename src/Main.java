@@ -132,7 +132,7 @@ public class Main {
                     sc.nextLine();
 
                     if (a == 1) {
-                        System.out.print("Enter name: ");
+                        System.out.print("Enter name; ");
                         String name = sc.nextLine();
                         for (BankAccount x : accounts)
                             if (x.name.equalsIgnoreCase(name))
