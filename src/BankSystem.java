@@ -8,8 +8,8 @@ public class BankSystem {
 
     public BankSystem() {
         BankAccount[] arr = {
-                new BankAccount("A1", "Ali", 150000),
-                new BankAccount("A2", "Sara", 220000),
+                new BankAccount("A1", "Almaz", 150000),
+                new BankAccount("A2", "Nill", 220000),
                 new BankAccount("A3", "Damir", 180000)
         };
 

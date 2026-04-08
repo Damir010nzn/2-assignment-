@@ -1,16 +1,5 @@
 import java.util.*;
 
-class BankAccount {
-    String accNo, name;
-    double balance;
-
-    BankAccount(String accNo, String name, double balance) {
-        this.accNo = accNo;
-        this.name = name;
-        this.balance = balance;
-    }
-}
-
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
