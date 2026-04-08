@@ -21,8 +21,8 @@ public class Main {
         Queue<BankAccount> requests = new LinkedList<>();
 
         BankAccount[] arr = {
-                new BankAccount("A1", "Ali", 150000),
-                new BankAccount("A2", "Sara", 220000),
+                new BankAccount("A1", "", 150000),
+                new BankAccount("A2", "", 220000),
                 new BankAccount("A3", "Damir", 180000)
         };
 
