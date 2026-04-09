@@ -1,11 +1,16 @@
 public class BankAccount {
-    String accNo;
-    String name;
+
+    String accountNumber;
+    String username;
     double balance;
 
-    public BankAccount(String accNo, String name, double balance) {
-        this.accNo = accNo;
-        this.name = name;
+    public BankAccount(String accountNumber, String username, double balance) {
+        this.accountNumber = accountNumber;
+        this.username = username;
         this.balance = balance;
+    }
+
+    public void show() {
+        System.out.println(username + " - Balance: " + balance);
     }
 }

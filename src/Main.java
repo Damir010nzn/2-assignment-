@@ -1,184 +1,112 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
 
-        LinkedList<BankAccount> accounts = new LinkedList<>();
-        Stack<String> history = new Stack<>();
-        Queue<String> bills = new LinkedList<>();
-        Queue<BankAccount> requests = new LinkedList<>();
+        AccountList list = new AccountList();
+        MyStack history = new MyStack(20);
 
-        BankAccount[] arr = {
-                new BankAccount("A1", "Almaz", 150000),
-                new BankAccount("A2", "Nill", 220000),
-                new BankAccount("A3", "Damir", 180000)
-        };
+        int choice;
 
-        for (BankAccount a : arr) accounts.add(a);
-
-        int ch;
         do {
-            System.out.println("\n1-Bank  2-ATM  3-Admin  4-Exit");
-            ch = sc.nextInt();
+
+            System.out.println("\n1 Add Account");
+            System.out.println("2 Show Accounts");
+            System.out.println("3 Deposit");
+            System.out.println("4 Withdraw");
+            System.out.println("5 Last Transaction");
+            System.out.println("6 Undo Transaction");
+            System.out.println("0 Exit");
+
+            System.out.print("Choose: ");
+            choice = sc.nextInt();
             sc.nextLine();
 
-            if (ch == 1) {
-                int b;
-                do {
-                    System.out.println("\n1-Request Account 2-Add Account 3-Show Accounts 4-Search 5-Deposit 6-Withdraw 7-Add Bill 8-History 9-Back");
-                    b = sc.nextInt();
-                    sc.nextLine();
+            if (choice == 1) {
 
-                    if (b == 1) {
-                        System.out.print("Acc No: ");
-                        String no = sc.nextLine();
-                        System.out.print("Name: ");
-                        String name = sc.nextLine();
-                        System.out.print("Balance: ");
-                        double bal = sc.nextDouble();
-                        sc.nextLine();
-                        requests.add(new BankAccount(no, name, bal));
-                        System.out.println("Request added");
-                    }
+                System.out.print("Account number: ");
+                String accNo = sc.nextLine();
 
-                    else if (b == 2) {
-                        System.out.print("Acc No: ");
-                        String no = sc.nextLine();
-                        System.out.print("Name: ");
-                        String name = sc.nextLine();
-                        System.out.print("Balance: ");
-                        double bal = sc.nextDouble();
-                        sc.nextLine();
-                        accounts.add(new BankAccount(no, name, bal));
-                        System.out.println("Account added");
-                    }
+                System.out.print("Username: ");
+                String name = sc.nextLine();
 
-                    else if (b == 3) {
-                        for (BankAccount a : accounts)
-                            System.out.println(a.name + " - " + a.balance);
-                    }
+                System.out.print("Balance: ");
+                double bal = sc.nextDouble();
 
-                    else if (b == 4) {
-                        System.out.print("Enter name: ");
-                        String name = sc.nextLine();
-                        for (BankAccount a : accounts)
-                            if (a.name.equalsIgnoreCase(name))
-                                System.out.println("Found: " + a.name + " - " + a.balance);
-                    }
-
-                    else if (b == 5) {
-                        System.out.print("Enter name: ");
-                        String name = sc.nextLine();
-                        System.out.print("Deposit: ");
-                        double x = sc.nextDouble();
-                        sc.nextLine();
-                        for (BankAccount a : accounts)
-                            if (a.name.equalsIgnoreCase(name)) {
-                                a.balance += x;
-                                history.push("Deposit " + x + " to " + a.name);
-                                System.out.println("New balance: " + a.balance);
-                            }
-                    }
-
-                    else if (b == 6) {
-                        System.out.print("Enter name: ");
-                        String name = sc.nextLine();
-                        System.out.print("Withdraw: ");
-                        double x = sc.nextDouble();
-                        sc.nextLine();
-                        for (BankAccount a : accounts)
-                            if (a.name.equalsIgnoreCase(name)) {
-                                if (a.balance >= x) {
-                                    a.balance -= x;
-                                    history.push("Withdraw " + x + " from " + a.name);
-                                    System.out.println("New balance: " + a.balance);
-                                } else System.out.println("Not enough money");
-                            }
-                    }
-
-                    else if (b == 7) {
-                        System.out.print("Bill name: ");
-                        String bill = sc.nextLine();
-                        bills.add(bill);
-                        history.push("Bill added: " + bill);
-                        System.out.println("Added: " + bill);
-                    }
-
-                    else if (b == 8) {
-                        System.out.println("History: " + history);
-                        if (!history.isEmpty()) System.out.println("Last: " + history.peek());
-                    }
-
-                } while (b != 9);
+                BankAccount acc = new BankAccount(accNo, name, bal);
+                list.addAccount(acc);
             }
 
-            else if (ch == 2) {
-                int a;
-                do {
-                    System.out.println("\n1-Balance 2-Withdraw 3-Back");
-                    a = sc.nextInt();
-                    sc.nextLine();
-
-                    if (a == 1) {
-                        System.out.print("Enter name; ");
-                        String name = sc.nextLine();
-                        for (BankAccount x : accounts)
-                            if (x.name.equalsIgnoreCase(name))
-                                System.out.println("Balance: " + x.balance);
-                    }
-
-                    else if (a == 2) {
-                        System.out.print("Enter name: ");
-                        String name = sc.nextLine();
-                        System.out.print("Withdraw: ");
-                        double x = sc.nextDouble();
-                        sc.nextLine();
-                        for (BankAccount acc : accounts)
-                            if (acc.name.equalsIgnoreCase(name)) {
-                                if (acc.balance >= x) {
-                                    acc.balance -= x;
-                                    history.push("ATM withdraw " + x + " from " + acc.name);
-                                    System.out.println("New balance: " + acc.balance);
-                                } else System.out.println("Not enough money");
-                            }
-                    }
-
-                } while (a != 3);
+            else if (choice == 2) {
+                list.showAccounts();
             }
 
-            else if (ch == 3) {
-                int ad;
-                do {
-                    System.out.println("\n1-Show Requests 2-Process Request 3-Show Bills 4-Process Bill 5-Undo Last 6-Back");
-                    ad = sc.nextInt();
-                    sc.nextLine();
+            else if (choice == 3) {
 
-                    if (ad == 1) System.out.println("Requests: " + requests.size());
+                System.out.print("Username: ");
+                String name = sc.nextLine();
 
-                    else if (ad == 2) {
-                        if (!requests.isEmpty()) {
-                            BankAccount x = requests.poll();
-                            accounts.add(x);
-                            System.out.println("Processed: " + x.name);
-                        } else System.out.println("No requests");
-                    }
+                BankAccount acc = list.findByUsername(name);
 
-                    else if (ad == 3) System.out.println("Bills: " + bills);
+                if (acc != null) {
 
-                    else if (ad == 4) {
-                        if (!bills.isEmpty()) System.out.println("Processing: " + bills.poll());
-                        else System.out.println("No bills");
-                    }
+                    System.out.print("Deposit: ");
+                    double money = sc.nextDouble();
 
-                    else if (ad == 5) {
-                        if (!history.isEmpty()) System.out.println("Undo: " + history.pop());
-                        else System.out.println("No history");
-                    }
+                    acc.balance += money;
 
-                } while (ad != 6);
+                    history.push("Deposit " + money + " to " + name);
+
+                    System.out.println("New balance: " + acc.balance);
+                }
+
+                else {
+                    System.out.println("User not found");
+                }
             }
 
-        } while (ch != 4);
+            else if (choice == 4) {
+
+                System.out.print("Username: ");
+                String name = sc.nextLine();
+
+                BankAccount acc = list.findByUsername(name);
+
+                if (acc != null) {
+
+                    System.out.print("Withdraw: ");
+                    double money = sc.nextDouble();
+
+                    if (acc.balance >= money) {
+
+                        acc.balance -= money;
+
+                        history.push("Withdraw " + money + " from " + name);
+
+                        System.out.println("New balance: " + acc.balance);
+                    }
+
+                    else {
+                        System.out.println("Not enough money");
+                    }
+                }
+
+                else {
+                    System.out.println("User not found");
+                }
+            }
+
+            else if (choice == 5) {
+                System.out.println("Last: " + history.peek());
+            }
+
+            else if (choice == 6) {
+                System.out.println("Undo: " + history.pop());
+            }
+
+        } while (choice != 0);
     }
 }
